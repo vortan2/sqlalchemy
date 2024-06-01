@@ -1,8 +1,8 @@
 from sqlalchemy import Integer, and_, func, insert, select, text, update
 from sqlalchemy.orm import aliased
 
-from database import async_engine, sync_engine, session_factory
-from models import metadata_obj, workers_table, WorkersOrm
+from src.database import async_engine, sync_engine, session_factory
+from src.models import metadata_obj, workers_table, WorkersOrm
 
 
 def get_123_sync():
@@ -23,7 +23,7 @@ def create_tables():
     metadata_obj.create_all(sync_engine)
 
 def insert_data():
-    with session() as session:
+    with session_factory() as session:
         worker_bobr = WorkersOrm(username='Bobr')
         worker_volk = WorkersOrm(username='Volk')
         session.add_all([worker_volk, worker_bobr])
